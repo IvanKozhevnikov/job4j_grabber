@@ -36,8 +36,8 @@ public class AlertRabbit {
         }
 
         public static int properties() {
-            try (FileInputStream in = new FileInputStream("C:\\Users\\Ivan_Kozhevnikov" +
-                    "\\IdeaProjects\\job4j_grabber\\src\\main\\resources\\rabbit.properties")) {
+            try (FileInputStream in = new FileInputStream("C:\\Users\\Ivan_Kozhevnikov"
+                    + "\\IdeaProjects\\job4j_grabber\\src\\main\\resources\\rabbit.properties")) {
                 StringBuilder text = new StringBuilder();
                 int read;
                 while ((read = in.read()) != -1) {
