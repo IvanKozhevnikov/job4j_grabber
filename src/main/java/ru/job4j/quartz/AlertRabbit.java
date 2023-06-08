@@ -41,7 +41,8 @@ public class AlertRabbit {
 
         public static int properties() throws IOException {
             properties = new Properties();
-            try (InputStream in = Rabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
+            try (InputStream in = Rabbit.class.getClassLoader()
+                    .getResourceAsStream("rabbit.properties")) {
                 properties.load(in);
             }
             return Integer.parseInt(properties.getProperty("rabbit.interval"));
