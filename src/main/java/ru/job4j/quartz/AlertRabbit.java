@@ -5,13 +5,15 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 public class AlertRabbit {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
@@ -30,25 +32,19 @@ public class AlertRabbit {
     }
 
     public static class Rabbit implements Job {
+        private static Properties properties;
+
         @Override
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");
         }
 
-        public static int properties() {
-            try (FileInputStream in = new FileInputStream("C:\\Users\\Ivan_Kozhevnikov"
-                    + "\\IdeaProjects\\job4j_grabber\\src\\main\\resources\\rabbit.properties")) {
-                StringBuilder text = new StringBuilder();
-                int read;
-                while ((read = in.read()) != -1) {
-                    text.append((char) read);
-                }
-                String[] split = text.toString().split("=");
-                return Integer.parseInt(split[1].trim());
-            } catch (IOException e) {
-                e.printStackTrace();
+        public static int properties() throws IOException {
+            properties = new Properties();
+            try (InputStream in = Rabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
+                properties.load(in);
             }
-            return 0;
+            return Integer.parseInt(properties.getProperty("rabbit.interval"));
         }
     }
 }
