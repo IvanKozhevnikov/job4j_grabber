@@ -52,11 +52,12 @@ public class AlertRabbit {
         }
 
         private static Connection connection() throws Exception {
-            Class.forName(init().getProperty("hibernate.connection.driver_class"));
+            Properties properties = init();
+            Class.forName(properties.getProperty("hibernate.connection.driver_class"));
             return DriverManager.getConnection(
-                    init().getProperty("hibernate.connection.url"),
-                    init().getProperty("hibernate.connection.username"),
-                    init().getProperty("hibernate.connection.password"));
+                    properties.getProperty("hibernate.connection.url"),
+                    properties.getProperty("hibernate.connection.username"),
+                    properties.getProperty("hibernate.connection.password"));
         }
 
         @Override
