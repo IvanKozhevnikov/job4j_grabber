@@ -58,6 +58,7 @@ public class AlertRabbit {
                     init().getProperty("hibernate.connection.username"),
                     init().getProperty("hibernate.connection.password"));
         }
+
         @Override
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");
@@ -67,7 +68,8 @@ public class AlertRabbit {
                     .get("store");
             try (PreparedStatement preparedStatement = connection
                     .prepareStatement("INSERT INTO rabbit(created_date) VALUES (?)")) {
-                preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+                preparedStatement.setTimestamp(1,
+                        new Timestamp(System.currentTimeMillis()));
                 preparedStatement.execute();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
