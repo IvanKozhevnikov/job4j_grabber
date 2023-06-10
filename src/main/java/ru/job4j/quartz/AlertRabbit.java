@@ -17,7 +17,7 @@ public class AlertRabbit {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDataMap data = new JobDataMap();
-            data.put("store", Rabbit.connection());
+            data.put("connect", Rabbit.connection());
             JobDetail job = newJob(Rabbit.class)
                     .usingJobData(data)
                     .build();
@@ -66,7 +66,7 @@ public class AlertRabbit {
             Connection connection = (Connection) context
                     .getJobDetail()
                     .getJobDataMap()
-                    .get("store");
+                    .get("connect");
             try (PreparedStatement preparedStatement = connection
                     .prepareStatement("INSERT INTO rabbit(created_date) VALUES (?)")) {
                 preparedStatement.setTimestamp(1,
