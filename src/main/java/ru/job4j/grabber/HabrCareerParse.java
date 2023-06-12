@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Date;
 
 public class HabrCareerParse {
 
@@ -20,13 +21,14 @@ public class HabrCareerParse {
         Document document = connection.get();
         Elements rows = document.select(".vacancy-card__inner");
         rows.forEach(row -> {
-            Element dateElement = row.select(".basic-date").first();
-            String vacancyDate = dateElement.text();
+            Element dateElement = row.select(".vacancy-card__date").first();
+            Element vacancyDate = dateElement.child(0);
+            String date = vacancyDate.attr("datetime");
             Element titleElement = row.select(".vacancy-card__title").first();
             Element linkElement = titleElement.child(0);
             String vacancyName = titleElement.text();
             String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-            System.out.printf("%s %s %s%n", vacancyDate, vacancyName, link);
+            System.out.printf("%s %s %s%n", date, vacancyName, link);
         });
     }
 }
