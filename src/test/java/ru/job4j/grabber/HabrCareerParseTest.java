@@ -12,7 +12,7 @@ class HabrCareerParseTest {
 
     @Test
     void parseInvalidFormatDateThenException() {
-        HabrCareerParse parser = new HabrCareerParse();
+        HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
         String in = "2021/09/03T07:19:14+03:00";
         assertThatThrownBy(() -> parser.parse(in))
                 .isInstanceOf(DateTimeParseException.class);
@@ -20,7 +20,7 @@ class HabrCareerParseTest {
 
     @Test
     void parseValidDateTimePattern() {
-        HabrCareerParse parser = new HabrCareerParse();
+        HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
         String in = "2021-09-03T07:19:14+03:00";
         String expect = "2021-09-03T07:19:14";
         assertThat(parser.parse(in).toString()).isEqualTo(expect);
