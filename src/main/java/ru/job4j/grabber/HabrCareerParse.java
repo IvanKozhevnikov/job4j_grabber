@@ -16,7 +16,7 @@ public class HabrCareerParse {
     private static final String PAGE_LINK = String.format(
             "%s/vacancies/java_developer?page=", SOURCE_LINK);
 
-    private static final int NUMBER_OF_PAGES = 1;
+    private static final int NUMBER_OF_PAGES = 5;
 
     public static void main(String[] args) throws IOException {
         HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
