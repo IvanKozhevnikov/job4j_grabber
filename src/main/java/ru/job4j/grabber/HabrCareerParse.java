@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 public class HabrCareerParse {
@@ -21,8 +22,7 @@ public class HabrCareerParse {
     public static void main(String[] args) throws IOException {
         HabrCareerDateTimeParser parser = new HabrCareerDateTimeParser();
         for (int i = 1; i <= NUMBER_OF_PAGES; i++) {
-            String page = PAGE_LINK + i;
-            Connection connection = Jsoup.connect(page);
+            Connection connection = Jsoup.connect(String.format("%s%s", PAGE_LINK, i));
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
             rows.forEach(row -> {
