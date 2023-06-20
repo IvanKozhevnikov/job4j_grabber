@@ -46,7 +46,8 @@ public class PsqlStore implements Store {
     @Override
     public void save(Post post) {
         try (PreparedStatement statement =
-                     cnn.prepareStatement("INSERT INTO post(name, text, link, created) VALUES (?, ?, ?, ?) ON CONFLICT (link) DO NOTHING",
+                     cnn.prepareStatement("INSERT INTO post(name, text, link, created)"
+                                     + " VALUES (?, ?, ?, ?) ON CONFLICT (link) DO NOTHING",
                              Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, post.getTitle());
             statement.setString(2, post.getDescription());
@@ -115,12 +116,12 @@ public class PsqlStore implements Store {
         Properties config = new Properties();
         PsqlStore psqlStore = new PsqlStore(config);
         List<Post> list = habrCareerParse.list(PAGE_LINK);
-        for(Post vacancy : list) {
+        for (Post vacancy : list) {
             psqlStore.save(vacancy);
         }
         System.out.println(psqlStore.findById(1));
         List<Post> habrListPost = psqlStore.getAll();
-        for(Post print : habrListPost) {
+        for (Post print : habrListPost) {
             System.out.println(print);
         }
     }
