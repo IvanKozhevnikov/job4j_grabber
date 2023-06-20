@@ -30,13 +30,13 @@ public class PsqlStore implements Store {
     private LocalDateTime localDateTime = timestamp.toLocalDateTime();
 
     public PsqlStore(Properties cfg) {
-        try (InputStream in = new FileInputStream("db/grabber.properties")) {
+        try (InputStream in = new FileInputStream("rabbit.properties")) {
             cfg.load(in);
-            Class.forName(cfg.getProperty("driver-class-name"));
+            Class.forName(cfg.getProperty("hibernate.connection.driver_class"));
             cnn = DriverManager.getConnection(
-                    cfg.getProperty("url"),
-                    cfg.getProperty("username"),
-                    cfg.getProperty("password")
+                    cfg.getProperty("hibernate.connection.url"),
+                    cfg.getProperty("hibernate.connection.username"),
+                    cfg.getProperty("hibernate.connection.password")
             );
         } catch (Exception e) {
             throw new IllegalStateException(e);
