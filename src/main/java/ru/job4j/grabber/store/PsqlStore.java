@@ -29,18 +29,13 @@ public class PsqlStore implements Store {
 
     private LocalDateTime localDateTime = timestamp.toLocalDateTime();
 
-    public PsqlStore(Properties cfg) {
-        try (InputStream in = new FileInputStream("rabbit.properties")) {
-            cfg.load(in);
+    public PsqlStore(Properties cfg) throws ClassNotFoundException, SQLException {
             Class.forName(cfg.getProperty("hibernate.connection.driver_class"));
             cnn = DriverManager.getConnection(
                     cfg.getProperty("hibernate.connection.url"),
                     cfg.getProperty("hibernate.connection.username"),
                     cfg.getProperty("hibernate.connection.password")
             );
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
     }
 
     @Override
@@ -108,21 +103,6 @@ public class PsqlStore implements Store {
     public void close() throws SQLException {
         if (cnn != null) {
             cnn.close();
-        }
-    }
-
-    public static void main(String[] args) throws SQLException, IOException {
-        HabrCareerParse habrCareerParse = new HabrCareerParse(new HabrCareerDateTimeParser());
-        Properties config = new Properties();
-        PsqlStore psqlStore = new PsqlStore(config);
-        List<Post> list = habrCareerParse.list(PAGE_LINK);
-        for (Post vacancy : list) {
-            psqlStore.save(vacancy);
-        }
-        System.out.println(psqlStore.findById(1));
-        List<Post> habrListPost = psqlStore.getAll();
-        for (Post print : habrListPost) {
-            System.out.println(print);
         }
     }
 }
