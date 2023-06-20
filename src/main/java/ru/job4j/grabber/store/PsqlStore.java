@@ -18,9 +18,6 @@ public class PsqlStore implements Store {
 
     private static final String SOURCE_LINK = "https://career.habr.com";
 
-    private static final String PAGE_LINK = String.format(
-            "%s/vacancies/java_developer?page=", SOURCE_LINK);
-
     private Connection cnn;
 
     private long millis = System.currentTimeMillis();

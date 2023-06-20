@@ -18,13 +18,13 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 public class Grabber implements Grab {
+    private static final String SOURCE_LINK = "https://career.habr.com";
+    private static final String PAGE_LINK = String.format(
+            "%s/vacancies/java_developer?page=", SOURCE_LINK);
     private final Parse parse;
     private final Store store;
     private final Scheduler scheduler;
     private final int time;
-    private static final String SOURCE_LINK = "https://career.habr.com";
-    private static final String PAGE_LINK = String.format(
-            "%s/vacancies/java_developer?page=", SOURCE_LINK);
 
     public Grabber(Parse parse, Store store, Scheduler scheduler, int time) {
         this.parse = parse;
@@ -72,7 +72,6 @@ public class Grabber implements Grab {
             }
         }
     }
-
 
     public static void main(String[] args) throws Exception {
         var cfg = new Properties();
